@@ -109,7 +109,8 @@ def build_pairwise_preference_tab(store: "AnnotationStore") -> gr.Tab:
             try:
                 all_reasons.extend(json.loads(r["reasons"]) if r["reasons"] else [])
             except Exception:
-                pass
+                # Keep UI responsive even if legacy rows contain invalid JSON.
+                continue
         if all_reasons:
             from collections import Counter
             top = Counter(all_reasons).most_common(5)

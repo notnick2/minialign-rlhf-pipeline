@@ -102,8 +102,8 @@ Every bullet from all 6 alignment engineering categories is implemented:
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/yourusername/minialign.git
-cd minialign
+git clone https://github.com/notnick2/minialign-rlhf-pipeline.git
+cd minialign-rlhf-pipeline
 pip install -e .
 ```
 
@@ -248,7 +248,7 @@ from data.contrastive_pairs import (
 # Combine all three sources
 pairs = combine_all_sources(
     degradation_path="data/degradation_pairs.jsonl",
-    annotations_db="annotation/annotations.db",
+    annotations_db="annotations.db",
     rlaif_path="constitutional/rlaif_results.jsonl",
     output_path="data/dpo_dataset.jsonl",
 )
@@ -364,7 +364,8 @@ All training runs are configured via YAML files in `configs/`. Key fields:
 MiniAlign/
 ├── annotation/             # Gradio annotation interface
 │   ├── app.py              #   5-tab annotation UI
-│   └── storage.py          #   SQLite annotation store + IAA
+│   └── storage/            #   SQLite annotation store + IAA
+│       └── annotation_store.py
 ├── configs/                # YAML training configs
 │   ├── sft_config.yaml
 │   ├── dpo_config.yaml

@@ -100,8 +100,9 @@ class RewardModel(nn.Module):
         try:
             tokenizer = AutoTokenizer.from_pretrained(self.backbone_name)
             tokenizer.save_pretrained(str(save_dir))
-        except Exception:
-            pass  # tokenizer might have been saved separately
+        except Exception as exc:
+            # Tokenizer saving is a best-effort convenience; avoid failing save_pretrained().
+            print(f"Warning: could not save tokenizer: {exc}")
 
         # Save meta config
         meta = {
