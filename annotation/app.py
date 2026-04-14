@@ -33,14 +33,7 @@ def build_app(db_path: str = "annotations.db") -> gr.Blocks:
 
     store = AnnotationStore(db_path=db_path)
 
-    with gr.Blocks(
-        title="MiniAlign — Annotation Interface",
-        theme=gr.themes.Soft(),
-        css="""
-        .main-header { text-align: center; margin-bottom: 1rem; }
-        .stats-panel { background: #f0f4f8; padding: 1rem; border-radius: 8px; }
-        """,
-    ) as app:
+    with gr.Blocks(title="MiniAlign — Annotation Interface") as app:
         gr.Markdown(
             """
 # MiniAlign Annotation Interface
@@ -103,7 +96,9 @@ def main():
         help="Path to SQLite database file (default: annotations.db)",
     )
     parser.add_argument(
-        "--host", default="0.0.0.0", help="Host to bind to (default: 0.0.0.0)"
+        "--host",
+        default="127.0.0.1",
+        help="Host to bind to (default: 127.0.0.1). Use 0.0.0.0 to bind all interfaces.",
     )
     parser.add_argument(
         "--port", type=int, default=7860, help="Port to listen on (default: 7860)"
@@ -118,6 +113,11 @@ def main():
         server_name=args.host,
         server_port=args.port,
         share=args.share,
+        theme=gr.themes.Soft(),
+        css="""
+        .main-header { text-align: center; margin-bottom: 1rem; }
+        .stats-panel { background: #f0f4f8; padding: 1rem; border-radius: 8px; }
+        """,
     )
 
 
