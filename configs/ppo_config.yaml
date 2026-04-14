@@ -1,0 +1,40 @@
+model:
+  policy_model: "microsoft/phi-2"
+  reward_model_path: "checkpoints/reward_model"
+  dtype: "float16"
+  trust_remote_code: true
+
+training:
+  learning_rate: 1e-5
+  batch_size: 4
+  mini_batch_size: 1
+  ppo_epochs: 4
+  max_steps: 1000
+  max_length: 512
+  max_new_tokens: 128
+  seed: 42
+  kl_penalty: "kl"
+  init_kl_coef: 0.2
+  adap_kl_ctrl: true
+  target_kl: 6.0
+  gamma: 1.0
+  lam: 0.95
+  cliprange: 0.2
+  cliprange_value: 0.2
+  vf_coef: 0.1
+
+data:
+  dataset_path: "data/sft_curated.jsonl"
+  max_samples: 1000
+
+peft:
+  use_lora: true
+  lora_r: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+
+tracking:
+  experiment_name: "ppo_baseline"
+  log_every_n_steps: 10
+  save_every_n_steps: 100
+  output_dir: "checkpoints/ppo"
